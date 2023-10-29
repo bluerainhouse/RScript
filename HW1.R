@@ -20,22 +20,66 @@ result <- result %>%
 high_level <- result %>%
   filter(Membership == "gold" | Membership == "diamond") 
 
-
 high_level %>%
   summarise(
     平均花費 = mean(Spend),
-    平均年齡 = mean(Age),
+    平均年齡 = mean(Age)
     )
 
-high_level%>%
+high_level %>%
   select(Gender) %>%
   table()
 
+high_level %>%
+  select(Region) %>%
+  table()
 
-result %>%
-  filter(Membership == "gold" | Membership == "diamond") %>%
-  summary()
+high_level %>%
+  select(Item) %>%
+  table()
 
-result %>%
-  filter(!(Membership == "gold" | Membership == "diamond")) %>%
-  summary()
+normal_level <- result %>%
+  filter(!(Membership == "gold" | Membership == "diamond"))
+
+
+normal_level %>%
+  summarise(
+    平均花費 = mean(Spend),
+    平均年齡 = mean(Age)
+  )
+
+normal_level %>%
+  select(Gender) %>%
+  table()
+
+normal_level %>%
+  select(Region) %>%
+  table()
+
+normal_level %>%
+  select(Item) %>%
+  table()
+
+male_result <- result %>%
+  filter(Gender == "male")
+
+male_result %>%
+  summarise(
+    平均花費 = mean(Spend),
+    平均年齡 = mean(Age)
+  )
+
+male_result %>%
+  select(Region) %>%
+  table()
+
+draw_data <- male_result %>%
+  group_by(Item) %>%
+  summarise(
+    Total = sum(Spend)
+  )
+
+ggplot(draw_data, aes(x = Item, y = Total)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Items", y = "Spend Total") +
+  theme_classic()
