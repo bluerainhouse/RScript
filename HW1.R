@@ -16,3 +16,26 @@ result <- salesdata %>%
 
 result <- result %>%
   mutate(Spend = UnitPrice * Quantity)
+
+high_level <- result %>%
+  filter(Membership == "gold" | Membership == "diamond") 
+
+
+high_level %>%
+  summarise(
+    平均花費 = mean(Spend),
+    平均年齡 = mean(Age),
+    )
+
+high_level%>%
+  select(Gender) %>%
+  table()
+
+
+result %>%
+  filter(Membership == "gold" | Membership == "diamond") %>%
+  summary()
+
+result %>%
+  filter(!(Membership == "gold" | Membership == "diamond")) %>%
+  summary()
