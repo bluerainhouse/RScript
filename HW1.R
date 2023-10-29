@@ -13,3 +13,6 @@ salesdata <- salesdata %>% select(!(X))
 result <- salesdata %>%
   left_join(client_list, by = "Client") %>%
   left_join(product_list, by = "Product")
+
+result <- result %>%
+  mutate(Spend = UnitPrice * Quantity)
